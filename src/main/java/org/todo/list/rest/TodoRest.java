@@ -6,6 +6,7 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.todo.list.dto.TodoDto;
 import org.todo.list.model.Todo;
 import org.todo.list.service.TodoService;
 
@@ -45,7 +46,7 @@ public class TodoRest {
 	description = "lista de tarefas",
 	content ={
             @Content(mediaType="application/json",
-            schema = @Schema(implementation = Todo.class,type= SchemaType.ARRAY))
+            schema = @Schema(implementation = TodoDto.class,type= SchemaType.ARRAY))
     })
     public Response listar()
     {
@@ -65,14 +66,33 @@ public class TodoRest {
             description = "tarefa",
             content ={
                     @Content(mediaType="application/json",
-                            schema = @Schema(implementation = Todo.class))
+                            schema = @Schema(implementation = TodoDto.class))
             })
-    public Response incluir(Todo todo){
+    public Response incluir(TodoDto todo){
         service.inserir(todo);
         return Response.status(Response.Status.CREATED)
                 .build();
     }
 
+
+    @DELETE
+    @Path("/{id}")
+    @Operation(
+            summary = "Excluir uma Tarefa",
+            description = "Excluir uma Tarefa"
+    )
+    @APIResponse(
+            responseCode = "202",
+            description = "excluir tarefa",
+            content ={
+                    @Content(mediaType="application/json",
+                            schema = @Schema(implementation = TodoDto.class))
+            })
+    public Response excluir(@PathParam("id") Long id){
+        service.excluir(id);
+        return Response.status(Response.Status.ACCEPTED)
+                .build();
+    }
 
 
 }

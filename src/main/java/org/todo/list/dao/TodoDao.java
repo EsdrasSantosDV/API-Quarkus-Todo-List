@@ -1,6 +1,7 @@
 package org.todo.list.dao;
 
 
+import org.eclipse.microprofile.opentracing.Traced;
 import org.todo.list.model.Todo;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +14,7 @@ import java.util.List;
 
 //DADOS TEM QUE SER MINIMAMENT TRATADOS
 @RequestScoped
+@Traced
 public class TodoDao {
     //INJETAR O CONTEXTO
     @PersistenceContext
@@ -46,5 +48,19 @@ public class TodoDao {
         return listaRetorno;
     }
 
+
+    @Transactional
+    public void excluir(Long id)
+    {
+        String nomeConsulta="EXCLUIR_TODO";
+        Query query=em.createNamedQuery(nomeConsulta);
+
+        //PASSAR OS PARAMETROS PARA O DELETE
+
+        query.setParameter("id",id);
+
+
+        query.executeUpdate();
+    }
 
 }
