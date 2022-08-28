@@ -22,7 +22,7 @@ public class TodoDao {
 
 
 
-    public void inserir()
+    public void inserir(Todo todo)
     {
 
     }

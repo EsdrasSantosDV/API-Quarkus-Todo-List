@@ -54,5 +54,25 @@ public class TodoRest {
                 build();
     }
 
+    @POST
+    @Path("/")
+    @Operation(
+            summary = "Incluir uma Tarefa",
+            description = "Incluir uma Tarefa"
+    )
+    @APIResponse(
+            responseCode = "201",
+            description = "tarefa",
+            content ={
+                    @Content(mediaType="application/json",
+                            schema = @Schema(implementation = Todo.class))
+            })
+    public Response incluir(Todo todo){
+        service.inserir();
+        return Response.status(Response.Status.CREATED)
+                .build();
+    }
+
+
 
 }
