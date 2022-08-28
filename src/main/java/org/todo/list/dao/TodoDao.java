@@ -4,10 +4,8 @@ package org.todo.list.dao;
 import org.todo.list.model.Todo;
 
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +19,18 @@ public class TodoDao {
     EntityManager em;
 
 
-
+    @Transactional
     public void inserir(Todo todo)
     {
+        String nomeConsulta="INSERIR_TODO";
+        Query query=em.createNamedQuery(nomeConsulta);
 
+        //PASSAR OS PARAMETROS PARA O INSERT
+
+        query.setParameter("nome",todo.getNome());
+        query.setParameter("dataCriacao",todo.getDataCriacao());
+
+        query.executeUpdate();
     }
 
     public List<Todo> listar(){

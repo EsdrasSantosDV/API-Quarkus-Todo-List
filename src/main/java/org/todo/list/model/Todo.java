@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Table(name="todo")
 
 @NamedNativeQueries({
-        @NamedNativeQuery(name="CONSULTAR_TODO",query="SELECT id,nome,dataCriacao FROM todo",resultClass=Todo.class)
+        @NamedNativeQuery(name="CONSULTAR_TODO",query="SELECT id,nome,dataCriacao FROM todo",resultClass=Todo.class),
+        @NamedNativeQuery(name="INSERIR_TODO",query="INSERT INTO todo(nome,dataCriacao) values(:nome,:dataCriacao)",resultClass=Todo.class)
 })
 
 public class Todo implements Serializable{

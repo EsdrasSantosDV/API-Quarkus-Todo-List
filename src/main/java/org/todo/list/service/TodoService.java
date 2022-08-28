@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 //COLOCANDO ISSO O CICLO DE VIDA DA REQUISIÇÃO E MENOR
@@ -36,6 +37,7 @@ public class TodoService {
     {
         //VALIDAÇÃO
         validar(todo);
+        todo.setDataCriacao(LocalDateTime.now());
         //CHAMADA DA DAO
         dao.inserir(todo);
     }

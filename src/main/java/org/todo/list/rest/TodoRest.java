@@ -68,7 +68,7 @@ public class TodoRest {
                             schema = @Schema(implementation = Todo.class))
             })
     public Response incluir(Todo todo){
-        service.inserir();
+        service.inserir(todo);
         return Response.status(Response.Status.CREATED)
                 .build();
     }
