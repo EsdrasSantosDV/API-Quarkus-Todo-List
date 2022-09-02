@@ -24,15 +24,54 @@ public class TodoDao {
     @Transactional
     public void inserir(Todo todo)
     {
-        String nomeConsulta="INSERIR_TODO";
-        Query query=em.createNamedQuery(nomeConsulta);
-
-        //PASSAR OS PARAMETROS PARA O INSERT
-
+        String nomeSql="INSERIR_TODO";
+        Query query=em.createNamedQuery(nomeSql);
         query.setParameter("nome",todo.getNome());
         query.setParameter("dataCriacao",todo.getDataCriacao());
 
         query.executeUpdate();
+
+
+
+    }
+    @Transactional
+    public void atualizar(Todo todo)
+    {
+        String nomeSql="ATUALIZAR_TODO";
+        Query query=em.createNamedQuery(nomeSql);
+
+        query.setParameter("id",todo.getId());
+        query.setParameter("nome",todo.getNome());
+        query.setParameter("dataCriacao",todo.getDataCriacao());
+
+        query.executeUpdate();
+    }
+
+//    @Transactional
+//    private void inserirOuAtualizar(String nomeSql,Todo todo)
+//    {
+//        Query query=em.createNamedQuery(nomeSql);
+//
+//        query.setParameter("id",todo.getId());
+//        query.setParameter("nome",todo.getNome());
+//        query.setParameter("dataCriacao",todo.getDataCriacao());
+//
+//        query.executeUpdate();
+//    }
+    public Todo buscarPorId(Long id){
+        String nomeConsulta="CONSULTAR_TODO_ID";
+        Todo todo;
+        TypedQuery<Todo> query=em.createNamedQuery(nomeConsulta,Todo.class);
+        query.setParameter("id",id);
+
+        try{
+            todo=  query.getSingleResult();
+        }catch (NoResultException e){
+            todo=null;
+        }
+
+        return todo;
+
     }
 
     public List<Todo> listar(){
@@ -62,5 +101,22 @@ public class TodoDao {
 
         query.executeUpdate();
     }
+
+    public Boolean IsnomeRepetido(String nome)
+    {
+        String nomeConsulta="CONSULTAR_NOME_REPETIDO_TODO";
+        Boolean nomeRepetido=Boolean.FALSE;
+        TypedQuery<Todo> query=em.createNamedQuery(nomeConsulta,Todo.class);
+
+        //PODE COLOCAR TAMBEM
+        //
+        query.setParameter("nome",nome);
+
+        nomeRepetido=  query.getResultList().size()>0;
+
+
+        return nomeRepetido;
+    }
+
 
 }

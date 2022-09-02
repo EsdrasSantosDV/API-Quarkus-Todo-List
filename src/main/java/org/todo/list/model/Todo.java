@@ -10,10 +10,13 @@ import java.time.LocalDateTime;
 //EXPECIFICAR O NOME DA TABELA
 @Table(name="todo")
 
-@NamedNativeQueries({
-        @NamedNativeQuery(name="CONSULTAR_TODO",query="SELECT id,nome,dataCriacao FROM todo",resultClass=Todo.class),
-        @NamedNativeQuery(name="INSERIR_TODO",query="INSERT INTO todo(nome,dataCriacao) values(:nome,:dataCriacao)"),
-        @NamedNativeQuery(name="EXCLUIR_TODO",query="DELETE FROM todo WHERE id=:id")
+@NamedNativeQueries(value = {
+        @NamedNativeQuery(name = "CONSULTAR_TODO", query = "SELECT id,nome,dataCriacao FROM todo", resultClass = Todo.class),
+        @NamedNativeQuery(name = "CONSULTAR_TODO_ID", query = "SELECT id,nome,dataCriacao FROM todo WHERE id=:id", resultClass = Todo.class),
+        @NamedNativeQuery(name = "CONSULTAR_NOME_REPETIDO_TODO", query = "SELECT id,nome,dataCriacao FROM todo WHERE nome= :nome", resultClass = Todo.class),
+        @NamedNativeQuery(name = "INSERIR_TODO", query = "INSERT INTO todo(nome,dataCriacao) values(:nome,:dataCriacao)"),
+        @NamedNativeQuery(name="ATUALIZAR_TODO",query="UPDATE todo set nome= :nome, dataCriacao =:dataCriacao WHERE id=:id"),
+        @NamedNativeQuery(name = "EXCLUIR_TODO", query = "DELETE FROM todo WHERE id=:id"),
 
 })
 
